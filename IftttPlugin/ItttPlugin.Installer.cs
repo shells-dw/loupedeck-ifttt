@@ -8,10 +8,11 @@
         public static Boolean Install()
         {
             // Here we ensure the plugin data directory is there.
-            var helperFunction = new IftttPlugin();
-            var pluginDataDirectory = helperFunction.GetPluginDataDirectory();
+            var _this = new IftttPlugin();
+            var pluginDataDirectory = _this.GetPluginDataDirectory();
             if (!IoHelpers.EnsureDirectoryExists(pluginDataDirectory))
             {
+                _this.Log.Info($"{DateTime.Now} - Installer: pluginDataDirectory doesn't exist");
                 return false;
             }
 
@@ -19,9 +20,11 @@
             var filePath = System.IO.Path.Combine(pluginDataDirectory, System.IO.Path.Combine(pluginDataDirectory, "events.json"));
             if (File.Exists(filePath))
             {
+                _this.Log.Info($"{DateTime.Now} - Installer: File exists");
                 return true;
             }
             ResourceReader.CreateFileFromResource("Loupedeck.IftttPlugin.events.json", filePath);
+            _this.Log.Info($"{DateTime.Now} - Installer: config file does not yet exist, creating default file");
             return true;
         }
     }

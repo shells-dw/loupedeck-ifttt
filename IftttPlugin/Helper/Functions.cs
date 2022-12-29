@@ -23,16 +23,19 @@
             var helperFunction = new IftttPlugin();
             var pluginDataDirectory = helperFunction.GetPluginDataDirectory();
             var json = File.ReadAllText(System.IO.Path.Combine(pluginDataDirectory, System.IO.Path.Combine(pluginDataDirectory, "events.json")));
-            var rss = JObject.Parse(json);
-            if (rss.ContainsKey("iftttKey"))
+            var parsed = JObject.Parse(json);
+            if (parsed.ContainsKey("iftttKey"))
             {
-                Globals.iftttKey = rss["iftttKey"].ToString();
+                Globals.iftttKey = parsed["iftttKey"].ToString();
+                var _this = new IftttPlugin();
+                _this.Log.Info($"{DateTime.Now} - rss.ContainsKey(\"iftttKey\")");
             }
-            Globals.events = rss["events"];
+            Globals.events = parsed["events"];
             return Task.CompletedTask;
         }
         public static async Task Send(String eventName, String iftttKey)
         {
+            var _this = new IftttPlugin();
             ReadEventsFile().Wait();
             var withJson = "";
             var content = new StringContent($"", Encoding.UTF8, "application/json");
@@ -56,6 +59,7 @@
             var response = await client.PostAsync(url, content);
             var responseContent = await response.Content.ReadAsStringAsync();
             Globals.httpResponses[eventName] = response.StatusCode.ToString();
+            _this.Log.Info($"{DateTime.Now} - Webhook sent, http response received: {response.StatusCode}");
             var _iftttEventTrigger = new IftttEventTrigger(eventName);
             HttpResponse?.Invoke(_plugin, _iftttEventTrigger);
             await Task.Delay(3000);

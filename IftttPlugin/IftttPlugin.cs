@@ -36,10 +36,12 @@ namespace Loupedeck.IftttPlugin
             {
                 this.SetPluginSetting("iftttKey", Helper.Globals.iftttKey);
                 this.OnPluginStatusChanged(Loupedeck.PluginStatus.Normal, "For Setup instructions refer to the plugin's ", "https://github.com/shells-dw/loupedeck-ifttt#events.json", "GitHub Readme");
+                this.Log.Info($"{DateTime.Now} - Plugin in nominal status");
             }
             if (Helper.Globals.iftttKey == null || Helper.Globals.iftttKey == "")
             {
                 this.OnPluginStatusChanged(Loupedeck.PluginStatus.Warning, "No IFTTT Webhook key found in events.json. Please make sure you've entered it correctly, then restart the Loupdeck Service", "https://github.com/shells-dw/loupedeck-ifttt#events.json", "GitHub Readme");
+                this.Log.Info($"{DateTime.Now} - Plugin in non-nominal status - Helper.Globals.iftttKey == null || Helper.Globals.iftttKey == \"\"");
             }
             return;
         }

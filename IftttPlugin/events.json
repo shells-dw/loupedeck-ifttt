@@ -1,14 +1,14 @@
 {
   "iftttKey": "",
   "events": {
-    "Test": [
+    "Example 1": [
       {
         "value1": "value1",
         "value2": "value2",
         "value3": "value3"
       }
     ],
-    "Test2": [
+    "Example 2": [
       { "this": [ { "is": { "some": [ "test", "data" ] } } ] }
     ]
   }

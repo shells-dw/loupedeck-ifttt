@@ -11,7 +11,7 @@
 
         private IftttPlugin _plugin;
         public SendWebhook()
-            : base(displayName: "IFTTT webhook", description: "IFTTT Webhook", groupName: "IFTTT")
+            : base(displayName: "Trigger IFTTT webhook", description: "Trigger IFTTT Webhook", groupName: "IFTTT")
         {
             Functions.ReadEventsFile();
             this.MakeProfileAction("list;Select event to send with this button: ");
@@ -35,6 +35,7 @@
         {
             this._plugin.TryGetPluginSetting("iftttKey", out var iftttKey);
             Functions.Send(actionParameter, iftttKey);
+            this.Log.Info($"{DateTime.Now} - Trying to send webhook {actionParameter}");
 
         }
         protected override BitmapImage GetCommandImage(String actionParameter, PluginImageSize imageSize)
@@ -43,9 +44,11 @@
             if (Globals.httpResponses[actionParameter] == "OK")
             {
                 currentState = true;
+                this.Log.Info($@"{DateTime.Now} - Globals.httpResponses[actionParameter] == OK");
             }
             if (Globals.httpResponses[actionParameter] != "OK" && Globals.httpResponses[actionParameter] != null)
             {
+                this.Log.Error($@"{DateTime.Now} - Globals.httpResponses[actionParameter] != OK && Globals.httpResponses[actionParameter] != null");
                 using (var bitmapBuilder = new BitmapBuilder(imageSize))
                 {
                     bitmapBuilder.DrawRectangle(0, 0, 80, 80, BitmapColor.Black);
@@ -58,6 +61,7 @@
             }
             if (this.Plugin.PluginStatus.Status.ToString() != "Normal")
             {
+                this.Log.Warning($@"{DateTime.Now} - this.Plugin.PluginStatus.Status.ToString() != Normal");
                 using (var bitmapBuilder = new BitmapBuilder(imageSize))
                 {
                     //drawing a black full-size rectangle to overlay the default graphic (TODO: figure out if that's maybe something that is done nicer than this)

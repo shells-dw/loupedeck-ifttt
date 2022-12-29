@@ -40,14 +40,14 @@ contains the file events.json
 {
   "iftttKey": "",
   "events": {
-    "Test": [
+    "Example 1": [
       {
         "value1": "value1",
         "value2": "value2",
         "value3": "value3"
       }
     ],
-    "Test2": [
+    "Example 2": [
       { "this": [ { "is": { "some": [ "test", "data" ] } } ] }
     ]
   }
@@ -57,9 +57,9 @@ Add your webhook key to the value `iftttKey`.
 
 Events are to be added (or the examples overwritten) inside `events`.
 
-The example event `Test` is to trigger an event with up to 3 values. IFTTT allows up to 3, but doesn't require them. You can remove all "value" fields or just use 1 or 2.
+The example event `Example 1` is to trigger an event with up to 3 values. IFTTT allows up to 3, but doesn't require them. You can remove all "value" fields or just use 1 or 2.
 
-The example `Test2` shows how to send an event with arbitrary json payload.
+The example `Example 2` shows how to send an event with arbitrary json payload.
 
 
 ## Usage
@@ -80,10 +80,17 @@ or use Ko-Fi [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi
 
 
 # Changelog
+## [1.0.1] - 2022-12-29
+- Added logging
+- Clarified plugin name shown in UI, naming in events.json and README.MD
+
+<details><summary>Changelog History</summary><p>
+
 ## [1.0.0] - 2022-12-09
 ### Added
 Initial release
 
+</p></details>
 
 <!-- Reference Links -->
 
